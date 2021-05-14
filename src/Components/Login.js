@@ -1,6 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import db, { auth } from "../Firebase/firebase_Config";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +16,8 @@ import {
 import "./style/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faUnlock } from "@fortawesome/free-solid-svg-icons";
-import { loginUser } from "../actions";
+import { fetchUserInfo, loginUser, LOGIN_SUCCESS } from "../actions";
+import { auth } from "../Firebase/firebase_Config";
 toast.configure();
 const eye = <FontAwesomeIcon icon={faEye} />;
 const eyeclose = <FontAwesomeIcon icon={faEyeSlash} />;
@@ -38,7 +38,26 @@ function Login() {
     return state.reducer.user;
   });
 
-  function LoginUser(e) {
+  useEffect(() => {
+    let get_idToken = localStorage.getItem("User_id_token");
+    if (get_idToken) {
+      auth.onIdTokenChanged((user) => {
+        user.getIdToken(true).then((token) => {
+          if (get_idToken === token) {
+            console.log("true");
+          } else {
+            console.log("false");
+          }
+        });
+        dispatch({
+          type: LOGIN_SUCCESS,
+          user,
+        });
+      });
+    }
+  });
+
+  const LoginUser = (e) => {
     e.preventDefault();
     setLoading(true);
     // console.log(currentUser);
@@ -52,12 +71,12 @@ function Login() {
     setPassword("");
     setEmail("");
     setLoading(false);
-  }
+  };
 
-  function togglePasswordVisiblity() {
+  const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown);
-  }
-  
+  };
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   } else {

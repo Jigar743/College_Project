@@ -3,7 +3,6 @@ import reactDOM from "react-dom";
 import App from "./App";
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import reducer from "./reducer/reducer";
 import { verifyAuth } from "./actions";
 import thunkMiddleware from "redux-thunk";

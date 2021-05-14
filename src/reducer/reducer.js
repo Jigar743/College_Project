@@ -4,6 +4,7 @@ import {
   PHONE_VERIFY_SUCCESS,
   PHONE_NUMBER_CHANGE,
   USER_INFO,
+  GET_IDTOKEN,
   SELLER_INFO_ADD,
   SELLER_PHONE_ADD,
   SELLER_INFO_FETCH,
@@ -31,7 +32,7 @@ const initialState = {
   currentUserDataFetch: false,
   seller_phone_add: false,
   isSignup: false,
-  isSellerInfoFetch : false,
+  isSellerInfoFetch: false,
   signupError: false,
   isLoggingIn: false,
   isLoggingOut: false,
@@ -40,15 +41,22 @@ const initialState = {
   logoutError: false,
   isAuthenticated: false,
   user: {},
+  id_Token: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_IDTOKEN:
+      console.log(action.idToken);
+      return {
+        ...state,
+        id_Token: action.idToken,
+      };
     case SELLER_INFO_FETCH:
       return {
         ...state,
-        isSellerInfoFetch : true
-      }
+        isSellerInfoFetch: true,
+      };
     case SELLER_PHONE_ADD:
       return {
         ...state,
@@ -60,11 +68,10 @@ const reducer = (state = initialState, action) => {
         seller_info_add: true,
       };
     case USER_INFO:
-      console.log(action.user)
       return {
         ...state,
         currentUserInfo: action.user,
-        currentUserDataFetch : true,
+        currentUserDataFetch: true,
       };
     case PHONE_USER_STORE:
       return {
@@ -108,8 +115,7 @@ const reducer = (state = initialState, action) => {
         loginError: false,
       };
     case LOGIN_SUCCESS:
-      let currentUser = action.user.user;
-      console.log(currentUser)
+      let currentUser = action.user;
       return {
         ...state,
         isLoggingIn: false,

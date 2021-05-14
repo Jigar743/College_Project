@@ -45,8 +45,6 @@ export default function Dashboard() {
         }, new Map())
         .values(),
     ];
-
-    console.log(result);
     setSellerSelecteProduct(result);
   };
 

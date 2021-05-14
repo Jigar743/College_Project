@@ -39,7 +39,6 @@ export default function SellerInfo() {
         return user.uid;
       })
       .toString();
-    console.log(uId);
     setUserId(uId);
     fetchSellerInfo(uId);
   }, []);

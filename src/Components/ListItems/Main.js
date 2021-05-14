@@ -10,8 +10,6 @@ import AccountInfo from "./AccountInfo";
 import YouProducts from "./YourProducts";
 import PaymentReceives from "./PaymentReceives";
 import YourAccount from "./YourAccount";
-import { useSelector } from "react-redux";
-import db from "../../Firebase/firebase_Config";
 
 export default function Main() {
   return (
@@ -26,7 +24,7 @@ export default function Main() {
         <Route path="/seller-account" component={YourAccount} />
         <Route path="/products" component={YouProducts} />
         <Route path="/payment-receives" component={PaymentReceives} />
-        <Redirect from="*" to="/phone-verify" />
+        <Redirect from="*" to="/dashboard" />
       </Switch>
       <Footer />
     </div>
