@@ -42,13 +42,6 @@ function Login() {
     let get_idToken = localStorage.getItem("User_id_token");
     if (get_idToken) {
       auth.onIdTokenChanged((user) => {
-        user.getIdToken(true).then((token) => {
-          if (get_idToken === token) {
-            console.log("true");
-          } else {
-            console.log("false");
-          }
-        });
         dispatch({
           type: LOGIN_SUCCESS,
           user,
